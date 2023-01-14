@@ -39,19 +39,7 @@ function renderplayer(){
     context.fillStyle = "#F08080";
     context.fillRect((player.x)-20, (player.y)-20, player.width, player.height);
     }
-// Function to create platforms
-function createplat(){
-    for(i = 0; i < num; i++) {
-        platforms.push(
-            {
-            x: 100 * i,
-            y: 200 + (30 * i),
-            width: 110,
-            height: 15
-            }
-        );
-    }
-    }
+
 // Function to render platforms
 function renderplat(){
     context.fillStyle = "#45597E";
@@ -129,7 +117,20 @@ function loop() {
     renderplat();
 }
 
-createplat();
+// Function to create platforms
+() => {
+    for(i = 0; i < num; i++) {
+        platforms.push(
+            {
+            x: 100 * i,
+            y: 200 + (30 * i),
+            width: 110,
+            height: 15
+            }
+        );
+    }
+    }
+
 // Adding the event listeners
 document.addEventListener("keydown",keydown);
 document.addEventListener("keyup",keyup);
