@@ -22,31 +22,58 @@ let keys = {
     left: false,
     up: false,
     };
-// The friction and gravity to show realistic movements    
+// The friction and gravity to show realistic movements
 const gravity = 0.6;
 const friction = 0.7;
 // The number of platforms
-var num = 2;
+const numberPlatforms = 2;
 // The platforms
-var platforms = [];
-// Function to render the canvas
-function rendercanvas(){
-    context.fillStyle = "#F0F8FF";
-    context.fillRect(0, 0, 270, 270);
+let platforms = [];
+
+// general render function
+function renderRect(
+    color = "black",
+    x = 0,
+    y = 0,
+    width = 0,
+    height = 0
+    ) {
+    context.fillStyle = color;
+    context.fillRect(
+        x = x,
+        y = y,
+        width = width,
+        height = height
+        );
 }
-// Function to render the player
-function renderplayer(){
-    context.fillStyle = "#F08080";
-    context.fillRect((player.x)-20, (player.y)-20, player.width, player.height);
-    }
 
 // Function to render platforms
-function renderplat(){
-    context.fillStyle = "#45597E";
-    context.fillRect(platforms[0].x, platforms[0].y, platforms[0].width, platforms[0].height);
-    context.fillRect(platforms[1].x, platforms[1].y, platforms[1].width,platforms[1]. height);
+function renderPlatforms(platforms) {
+    for ( let index = 0; index < platforms.length; index++) {
+        renderRect(
+            color = "#45597E",
+            x = platforms[index].x,
+            y = platforms[index].y,
+            width = platforms[index].width,
+            height = platforms[index].height
+            )
+    }
+};
 
-}
+// Function to create platforms
+function placePlat() {
+    for(i = 0; i < numberPlatforms; i++) {
+        platforms.push(
+            {
+            x: 100 * i,
+            y: 200 + (30 * i),
+            width: 110,
+            height: 15
+            }
+        );
+    }
+};
+
 // This function will be called when a key on the keyboard is pressed
 function keydown(e) {
     // 37 is the code for the left arrow key
@@ -63,7 +90,8 @@ function keydown(e) {
     if(e.keyCode == 39) {
         keys.right = true;
     }
-}
+};
+
 // This function is called when the pressed key is released
 function keyup(e) {
     if(e.keyCode == 37) {
@@ -77,7 +105,8 @@ function keyup(e) {
     if(e.keyCode == 39) {
         keys.right = false;
     }
-} 
+};
+
 function loop() {
     // If the player is not jumping apply the effect of frictiom
     if(player.jump == false) {
@@ -111,25 +140,27 @@ function loop() {
         player.jump = false;
         player.y = platforms[i].y;    
     }
-    // Rendering the canvas, the player and the platforms
-    rendercanvas();
-    renderplayer();
-    renderplat();
-}
-
-// Function to create platforms
-() => {
-    for(i = 0; i < num; i++) {
-        platforms.push(
-            {
-            x: 100 * i,
-            y: 200 + (30 * i),
-            width: 110,
-            height: 15
-            }
+    // Rendering the canvas, 
+    renderRect(
+        color = "black",
+        x = 0,
+        y = 0,
+        width = viewportWidth,
+        height = viewportHeight
         );
-    }
-    }
+    // the player 
+     renderRect(
+        color = "white",
+        x = (player.x)-20,
+        y = (player.y)-20,
+        width = player.width,
+        height = player.height
+        );
+    // and the platforms
+     renderPlatforms(platforms);
+};
+
+placePlat()
 
 // Adding the event listeners
 document.addEventListener("keydown",keydown);
